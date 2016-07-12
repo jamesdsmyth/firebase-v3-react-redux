@@ -1,6 +1,13 @@
 # Firebase v3 with React using Redux
 
+### How to run
+
 Clone/pull this repo to see a working example that lists pubs in a table with data pulled from a Firebase database.
+
+1. `git clone` repo
+2. `npm install` to get the node_modules
+3. `npm start` to initialize the app
+4. visit [http://localhost:8080/](http://localhost:8080/)
 
 This is a walkthrough of how I managed to get Firebase v3 to play nice with React and Redux. This is a simple approach that involves dispatching an action once the data from Firebase has been received. This in turn passes the Firebase data to a reducer, creating a new state which will then update the view automatically due to React's way of dealing with life cycles.
 
