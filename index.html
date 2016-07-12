@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Firebase v3 React Redux</title>
+    </head>
+    <body>
+        <div id="firebase-app"></div>
+        <script src="https://www.gstatic.com/firebasejs/3.1.0/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/3.1.0/firebase-database.js"></script>
+        <script>
+            // Initialize Firebase
+            var config = {
+                apiKey: "AIzaSyA7JwFHnI-I84gPBWPqklQrgPLtT1ijD58",
+                authDomain: "show-me-beer.firebaseapp.com",
+                databaseURL: "https://show-me-beer.firebaseio.com",
+                storageBucket: "show-me-beer.appspot.com",
+            };
+            firebase.initializeApp(config);
+        </script>
+        <script src="/bundle.js"></script>
+    </body>
+</html>
