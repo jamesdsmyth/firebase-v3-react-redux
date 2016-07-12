@@ -1,5 +1,7 @@
 # Firebase v3 with React using Redux
 
+Clone/pull this repo to see a working example that lists pubs in a table with data pulled from a Firebase database.
+
 This is a walkthrough of how I managed to get Firebase v3 to play nice with React and Redux. This is a simple approach that involves dispatching an action once the data from Firebase has been received. This in turn passes the Firebase data to a reducer, creating a new state which will then update the view automatically due to React's way of dealing with life cycles.
 
 **Setting up Firebase**
@@ -25,8 +27,6 @@ Adding the below code to the base of your `<body>` above any other JavaScript re
 After setting up the `Redux store` you need to dispatch an action that passes the `snapshot.val()` to the `action creator` and in turn dispatches the object to the reducers. Please note I am using ES6 arrow functions which means you need to be using a transpiler such as [Babel](https://babeljs.io/) for it to work on browsers that do not support ES6 yet.
 
 ```javascript
-import { createStore, combineReducers } from 'redux'
-
 // combines all reducers, one in this case...
 var Reducer = combineReducers({
     locations: LocationsReducer
