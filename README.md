@@ -11,7 +11,7 @@ Adding the below code to the base of your `<body>` above any other JavaScript re
     <script>
     // Initialize Firebase
     var config = {
-        apiKey: "AIzaSyD_JN46w3-L8UR6pEMVDLtGU4IdA8CnJaM",
+        apiKey: "XXXXXX_XXXXXX-XXXXXXXXXXXXXXXXXXXXX",
         authDomain: "fir-react-redux-example.firebaseapp.com",
         databaseURL: "https://fir-react-redux-example.firebaseio.com",
         storageBucket: "",

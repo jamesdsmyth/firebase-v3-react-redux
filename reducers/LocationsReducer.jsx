@@ -8,7 +8,6 @@ var LocationsReducer = (state = {}, action) => {
 
             newState = action.data.locations;
 
-            console.log('new state is', newState);
             return newState;
             break;
 
