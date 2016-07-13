@@ -28,7 +28,7 @@ class LocationsContainerView extends React.Component {
         });
     }
 
-    editLocation (ref) {
+    updateLocation (ref) {
         var newData = {
             name: document.getElementById('edit-name').value,
             postCode: document.getElementById('edit-postCode').value,
@@ -67,12 +67,12 @@ class LocationsContainerView extends React.Component {
                     {locations[item].street}
                 </td>
                 <td>
-                    <button type="button" onClick={() => this.editLocation(item)}>
+                    <button type="button" onClick={() => this.updateLocation(item)}>
                         Edit location
                     </button>
                 </td>
                 <td>
-                    {Object.keys(locations).length > 4 ?
+                    {Object.keys(locations).length > 5 ?
                         <button type="button" onClick={() => this.removeLocation(item)}>
                             Remove location
                         </button>
@@ -144,7 +144,7 @@ class LocationsContainerView extends React.Component {
                         Street:
                     </label>
                     <input type="text" id="edit-street" />
-                    <button type="button" onClick={() => this.editLocation()}>
+                    <button type="button" onClick={() => this.updateLocation()}>
                         Edit location
                     </button>
                 </section>

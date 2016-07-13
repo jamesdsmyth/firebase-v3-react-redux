@@ -2,7 +2,7 @@
 
 ### How to run
 
-Clone/pull this repo to see a working example that lists pubs in a table with data pulled from a Firebase database.
+Clone or pull this repo to see a working example that lists locations in a table with data pulled from a Firebase database. You can add more locations while deleting them and editing them. All will be automatically saved in the Firebase database.
 
 1. `git clone` repo
 2. `npm install` to get the node_modules
@@ -58,7 +58,7 @@ function populateLocations (data) {
 
 ### Creating a new state with the Firebase data
 
-Below is the reducer that is relevant to the dispatch so when the Firebase data is returned, the `newState` is updated with the `action.data.locations` and returned. The `action` is the object containing the `type` and `data` which we created in the action `populateLocations`.
+After dispatching the action `populateLocations`, the Firebase data is returned, the `newState` is updated with the `action.data.locations`. The `action` is the object containing the `type` and `data` which we created in the action `populateLocations`.
 
 ```javascript
 // LocationsReducer is automatically called by Redux when a dispatch occurs
@@ -79,9 +79,53 @@ var LocationsReducer = (state = {}, action) => {
 }
 ```
 
-### Future
 
-I am still exploring Firebase and will be adding how to write to the database using React & Redux as well as asynchronous actions.
+### Push data to Firebase
+
+```javascript
+pushLocation () {
+    firebase.database().ref('/locations').push({
+        name: document.getElementById('name').value,
+        postCode: document.getElementById('postCode').value,
+        street: document.getElementById('street').value
+    }, function () {
+        document.getElementById('name').value = null;
+        document.getElementById('postCode').value = null;
+        document.getElementById('street').value = null;
+    });
+}
+```
+
+
+
+### Update specific data fields in Firebase
+
+```javascript
+updateLocation (ref) {
+    var newData = {
+        name: document.getElementById('edit-name').value,
+        postCode: document.getElementById('edit-postCode').value,
+        street: document.getElementById('edit-street').value
+    }
+
+    var updatedLocation = {};
+        updatedLocation['/locations/' + ref] = newData;
+
+    firebase.database().ref().update(updatedLocation);
+}
+```
+
+
+
+### Remove data in Firebase
+
+```javascript
+removeLocation (ref) {
+    firebase.database().ref('/locations/' + ref).remove();
+}
+```
+
+
 
 ### Help improve this
 
