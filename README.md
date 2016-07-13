@@ -1,4 +1,4 @@
-# Firebase v3 with React using Redux
+# Firebase v3 with React using Redux (reading data from the database, writing will be added soon...)
 
 ### How to run
 
@@ -78,6 +78,10 @@ var LocationsReducer = (state = {}, action) => {
     }
 }
 ```
+
+### Future
+
+I am still exploring Firebase and will be adding how to write to the database using React & Redux as well as asynchronous actions.
 
 ### Help improve this
 
