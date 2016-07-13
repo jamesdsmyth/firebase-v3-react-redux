@@ -6,6 +6,7 @@ var LocationsReducer = (state = {}, action) => {
 
         case 'ALL_LOCATIONS':
 
+            // creating a newState of the data we attached to the action (Firebase data)
             newState = action.data.locations;
 
             return newState;

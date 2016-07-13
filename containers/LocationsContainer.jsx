@@ -6,7 +6,9 @@ class LocationsContainerView extends React.Component {
     constructor(props) {
 
         super(props);
-        this.state = {}
+        this.state = {
+            overlay: false
+        }
     }
 
     componentWillReceiveProps (props) {
@@ -17,6 +19,7 @@ class LocationsContainerView extends React.Component {
         });
     }
 
+    // Add location to database
     pushLocation () {
 
         var newLocation = {
@@ -32,7 +35,29 @@ class LocationsContainerView extends React.Component {
         });
     }
 
-    updateLocation (ref) {
+    // toggle the overlay to edit the location
+    toggleUpdateLocationOverlay (ref, location) {
+
+        // showing the overlay and setting a reference to the location key
+        this.setState({
+            overlay: true,
+            currentLocation: ref
+        });
+
+        console.log(ref);
+
+        setTimeout(() => {
+            document.getElementById('edit-name').value = location.name;
+            document.getElementById('edit-postCode').value = location.postCode;
+            document.getElementById('edit-street').value = location.street;
+        }, 250)
+
+    }
+
+    // remove location in database
+    updateLocation () {
+
+        console.log(this.state.currentLocation);
 
         var newData = {
             name: document.getElementById('edit-name').value,
@@ -41,11 +66,17 @@ class LocationsContainerView extends React.Component {
         }
 
         var updatedLocation = {};
-            updatedLocation['/locations/' + ref] = newData;
+            updatedLocation['/locations/' + this.state.currentLocation] = newData;
 
         firebase.database().ref().update(updatedLocation);
+
+        // hiding the overlay
+        this.setState({
+            overlay: false
+        });
     }
 
+    // remove location from database
     removeLocation (ref) {
 
         firebase.database().ref('/locations/' + ref).remove();
@@ -73,7 +104,7 @@ class LocationsContainerView extends React.Component {
                     {locations[item].street}
                 </td>
                 <td>
-                    <button type="button" onClick={() => this.updateLocation(item)}>
+                    <button type="button" onClick={() => this.toggleUpdateLocationOverlay(item, locations[item])}>
                         Edit location
                     </button>
                 </td>
@@ -136,24 +167,26 @@ class LocationsContainerView extends React.Component {
                         </tbody>
                     </table>
                 </section>
-                <section className="overlay">
-                    <h2>Edit the location</h2>
-                    <label htmlFor="edit-name">
-                        Name:
-                    </label>
-                    <input type="text" id="edit-name" />
-                    <label htmlFor="edit-postCode">
-                        Postcode:
-                    </label>
-                    <input type="text" id="edit-postCode" />
-                    <label htmlFor="edit-street">
-                        Street:
-                    </label>
-                    <input type="text" id="edit-street" />
-                    <button type="button" onClick={() => this.updateLocation()}>
-                        Edit location
-                    </button>
-                </section>
+                {this.state.overlay === true ?
+                    <section className="overlay">
+                        <h2>Edit the location</h2>
+                        <label htmlFor="edit-name">
+                            Name:
+                        </label>
+                        <input type="text" id="edit-name" />
+                        <label htmlFor="edit-postCode">
+                            Postcode:
+                        </label>
+                        <input type="text" id="edit-postCode" />
+                        <label htmlFor="edit-street">
+                            Street:
+                        </label>
+                        <input type="text" id="edit-street" />
+                        <button type="button" onClick={() => this.updateLocation()}>
+                            Edit location
+                        </button>
+                    </section>
+                : null }
             </main>
         )
     }

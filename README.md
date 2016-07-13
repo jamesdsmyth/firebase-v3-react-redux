@@ -1,8 +1,9 @@
-# Firebase v3 with React using Redux - Retrieving, updating, adding and removing data
+# Firebase v3 with React & Redux
+## Retrieving, updating, adding & removing data
 
 ### How to run
 
-Clone or pull this repo to see a working example that lists locations in a table with data pulled from a Firebase database. You can add more locations while deleting them and editing them. All will be automatically saved in the Firebase database.
+Clone or pull this repo to see a working example that lists locations in a table with data pulled from a Firebase database. You can add more locations while deleting them and editing them. All changes will be automatically saved in the Firebase database and re-render the components in the React application.
 
 1. `git clone` repo
 2. `npm install` to get the node_modules
@@ -28,6 +29,7 @@ Adding the below code to the base of your `<body>` above any other JavaScript re
     firebase.initializeApp(config);
 </script>
 ```
+
 ---
 
 
@@ -57,10 +59,8 @@ function populateLocations (data) {
     }
 }
 ```
----
 
-
-### Creating a new state with the Firebase data
+**Creating a new state with the Firebase data**
 
 After dispatching the action `populateLocations`, the Firebase data is returned, the `newState` is updated with the `action.data.locations`. The `action` is the object containing the `type` and `data` which we created in the action `populateLocations`.
 
@@ -82,6 +82,7 @@ var LocationsReducer = (state = {}, action) => {
     }
 }
 ```
+
 ---
 
 
@@ -112,6 +113,7 @@ pushLocation () {
     });
 }
 ```
+
 ---
 
 ### Update specific data fields in Firebase
@@ -132,6 +134,7 @@ updateLocation (ref) {
     firebase.database().ref().update(updatedLocation);
 }
 ```
+
 ---
 
 ### Remove data in Firebase
@@ -149,6 +152,7 @@ removeLocation (ref) {
     firebase.database().ref('/locations/' + ref).remove();
 }
 ```
+
 ---
 
 ### Help improve this
