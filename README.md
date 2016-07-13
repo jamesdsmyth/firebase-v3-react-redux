@@ -1,4 +1,4 @@
-# Firebase v3 with React using Redux (reading data from the database, writing will be added soon...)
+# Firebase v3 with React using Redux - Retrieving, updating, adding and removing data
 
 ### How to run
 
@@ -28,6 +28,8 @@ Adding the below code to the base of your `<body>` above any other JavaScript re
     firebase.initializeApp(config);
 </script>
 ```
+---
+
 
 ### Retrieve data from Firebase
 
@@ -55,6 +57,8 @@ function populateLocations (data) {
     }
 }
 ```
+---
+
 
 ### Creating a new state with the Firebase data
 
@@ -78,27 +82,41 @@ var LocationsReducer = (state = {}, action) => {
     }
 }
 ```
+---
 
 
 ### Push data to Firebase
 
+Clicking the 'Create location' submit button, the `pushLocation()` is called. A new object is created using the fields we would like to update, with the properties relating to the 'create location' form input fields. We only need to go one level deep when pushing to the locations object. On push, there is a function that wipes the content of each input field ready to add another location.
+
+```html
+<button type="submit" onClick={() => this.pushLocation()}>
+    Create location
+</button>
+```
+
 ```javascript
 pushLocation () {
-    firebase.database().ref('/locations').push({
+
+    // creating the object that will be pushed to the object in the database
+    var newLocation = {
         name: document.getElementById('name').value,
         postCode: document.getElementById('postCode').value,
         street: document.getElementById('street').value
-    }, function () {
+    }
+
+    firebase.database().ref('/locations').push(newLocation, function () {
         document.getElementById('name').value = null;
         document.getElementById('postCode').value = null;
         document.getElementById('street').value = null;
     });
 }
 ```
-
-
+---
 
 ### Update specific data fields in Firebase
+
+Clicking the 'Update location' button, the `updateLocation()` is called.
 
 ```javascript
 updateLocation (ref) {
@@ -114,18 +132,24 @@ updateLocation (ref) {
     firebase.database().ref().update(updatedLocation);
 }
 ```
-
-
+---
 
 ### Remove data in Firebase
+
+Clicking on the 'Remove location' button, the `removeLocation()` is called. Here we are passing the `item` which is the unique key for that location in the database. Referencing this in the `removeLocation()` we can remove that location like below.
+
+```html
+<button type="button" onClick={() => this.removeLocation(item)}>
+    Remove location
+</button>
+```
 
 ```javascript
 removeLocation (ref) {
     firebase.database().ref('/locations/' + ref).remove();
 }
 ```
-
-
+---
 
 ### Help improve this
 

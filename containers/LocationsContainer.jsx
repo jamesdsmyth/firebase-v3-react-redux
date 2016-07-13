@@ -4,12 +4,13 @@ import { connect } from 'react-redux'
 class LocationsContainerView extends React.Component {
 
     constructor(props) {
-        super(props);
 
+        super(props);
         this.state = {}
     }
 
     componentWillReceiveProps (props) {
+
         console.log('recieving props');
         this.setState({
             locations: props.locations
@@ -17,11 +18,14 @@ class LocationsContainerView extends React.Component {
     }
 
     pushLocation () {
-        firebase.database().ref('/locations').push({
+
+        var newLocation = {
             name: document.getElementById('name').value,
             postCode: document.getElementById('postCode').value,
             street: document.getElementById('street').value
-        }, function () {
+        }
+
+        firebase.database().ref('/locations').push(newLocation, function () {
             document.getElementById('name').value = null;
             document.getElementById('postCode').value = null;
             document.getElementById('street').value = null;
@@ -29,6 +33,7 @@ class LocationsContainerView extends React.Component {
     }
 
     updateLocation (ref) {
+
         var newData = {
             name: document.getElementById('edit-name').value,
             postCode: document.getElementById('edit-postCode').value,
@@ -42,6 +47,7 @@ class LocationsContainerView extends React.Component {
     }
 
     removeLocation (ref) {
+
         firebase.database().ref('/locations/' + ref).remove();
     }
 
