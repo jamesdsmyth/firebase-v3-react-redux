@@ -20,7 +20,7 @@ Adding the below code to the base of your `<body>` above any other JavaScript re
     <script>
     // Initialize Firebase
     var config = {
-        apiKey: "XXXXXX_XXXXXX-XXXXXXXXXXXXXXXXXXXXX",
+        apiKey: "your_key",
         authDomain: "fir-react-redux-example.firebaseapp.com",
         databaseURL: "https://fir-react-redux-example.firebaseio.com",
         storageBucket: "",
@@ -29,7 +29,7 @@ Adding the below code to the base of your `<body>` above any other JavaScript re
 </script>
 ```
 
-**Getting the data from Firebase**
+**Retrieve data from Firebase**
 
 After setting up the `Redux store` you need to dispatch an action that passes the `snapshot.val()` to the `action creator` and in turn dispatches the object to the reducers. Please note I am using ES6 arrow functions which means you need to be using a transpiler such as [Babel](https://babeljs.io/) for it to work on browsers that do not support ES6 yet.
 

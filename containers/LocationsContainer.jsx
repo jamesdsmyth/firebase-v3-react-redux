@@ -11,8 +11,17 @@ class LocationsContainerView extends React.Component {
     }
 
     componentWillReceiveProps (props) {
+        console.log('recieving props');
         this.setState({
             locations: props.locations
+        });
+    }
+
+    pushLocation () {
+        firebase.database().ref('/locations').push({
+            name: document.getElementById('name').value,
+            postCode: document.getElementById('postCode').value,
+            street: document.getElementById('street').value
         });
     }
 
@@ -20,7 +29,6 @@ class LocationsContainerView extends React.Component {
 
         // saving the state locations as a variable to make it easier to reference later on
         var locations = this.state.locations;
-
 
         // to demonstrate that we have got the firebase data we will construct a table.
         // here we are iterating through each object and creating a table row.
@@ -42,26 +50,46 @@ class LocationsContainerView extends React.Component {
         });
 
         return (
-            <div>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>
-                                Name
-                            </th>
-                            <th>
-                                Postcode
-                            </th>
-                            <th>
-                                Street
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {locationTableContent}
-                    </tbody>
-                </table>
-            </div>
+            <main>
+                <h1>Firebase v3 React Redux</h1>
+                <section>
+                    <h2>Create a location</h2>
+                    <label htmlFor="name">
+                        Name:
+                    </label>
+                    <input type="text" id="name" />
+                    <label htmlFor="postCode">
+                        Postcode:
+                    </label>
+                    <input type="text" id="postCode" />
+                    <label htmlFor="street">
+                        Street:
+                    </label>
+                    <input type="text" id="street" />
+                    <button type="submit" onClick={() => this.pushLocation()}>Create location</button>
+                </section>
+                <section>
+                    <h2>Location list</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>
+                                    Name
+                                </th>
+                                <th>
+                                    Postcode
+                                </th>
+                                <th>
+                                    Street
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {locationTableContent}
+                        </tbody>
+                    </table>
+                </section>
+            </main>
         )
     }
 }
