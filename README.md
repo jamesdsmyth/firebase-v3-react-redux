@@ -1,5 +1,10 @@
 # Firebase v3 with React & Redux
+
 ## Retrieving, updating, adding & removing data
+
+![Firebase v3 with React & Redux 1](images/redux-1.jpg)
+
+![Firebase v3 with React & Redux 2](images/redux-2.jpg)
 
 ### How to run
 

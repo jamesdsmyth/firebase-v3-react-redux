@@ -26,8 +26,6 @@ class LocationsContainerView extends React.Component {
             postcodeInput = document.getElementById('postCode'),
             streetInput = document.getElementById('street');
 
-        console.log(postcodeInput.value)
-
         if((nameInput.value !== '') && (postcodeInput.value !== '') && (streetInput.value !== '')) {
             var newLocation = {
                 name: nameInput.value,
@@ -70,15 +68,17 @@ class LocationsContainerView extends React.Component {
             street: document.getElementById('edit-street').value
         }
 
-        var updatedLocation = {};
-            updatedLocation['/locations/' + this.state.currentLocation] = newData;
+        if((newData.name !== '') && (newData.postCode !== '') && (newData.street !== '')) {
+            var updatedLocation = {};
+                updatedLocation['/locations/' + this.state.currentLocation] = newData;
 
-        firebase.database().ref().update(updatedLocation);
+            firebase.database().ref().update(updatedLocation);
 
-        // hiding the overlay
-        this.setState({
-            overlay: false
-        });
+            // hiding the overlay
+            this.setState({
+                overlay: false
+            });
+        }
     }
 
     // clicking on the big 'x' on the overlay will close the overlay
