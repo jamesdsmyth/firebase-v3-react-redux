@@ -11,9 +11,9 @@ class LocationsContainerView extends React.Component {
         }
     }
 
+    // when Firebase returns the data, we set it in the state
     componentWillReceiveProps (props) {
 
-        console.log('recieving props');
         this.setState({
             locations: props.locations
         });
@@ -22,17 +22,27 @@ class LocationsContainerView extends React.Component {
     // Add location to database
     pushLocation () {
 
-        var newLocation = {
-            name: document.getElementById('name').value,
-            postCode: document.getElementById('postCode').value,
-            street: document.getElementById('street').value
+        var nameInput = document.getElementById('name'),
+            postcodeInput = document.getElementById('postCode'),
+            streetInput = document.getElementById('street');
+
+        console.log(postcodeInput.value)
+
+        if((nameInput.value !== '') && (postcodeInput.value !== '') && (streetInput.value !== '')) {
+            var newLocation = {
+                name: nameInput.value,
+                postCode: postcodeInput.value,
+                street: streetInput.value
+            }
+
+            firebase.database().ref('/locations').push(newLocation, function () {
+                nameInput.value = null;
+                postcodeInput.value = null;
+                streetInput.value = null;
+            });
         }
 
-        firebase.database().ref('/locations').push(newLocation, function () {
-            document.getElementById('name').value = null;
-            document.getElementById('postCode').value = null;
-            document.getElementById('street').value = null;
-        });
+        return false;
     }
 
     // toggle the overlay to edit the location
@@ -44,20 +54,15 @@ class LocationsContainerView extends React.Component {
             currentLocation: ref
         });
 
-        console.log(ref);
-
         setTimeout(() => {
             document.getElementById('edit-name').value = location.name;
             document.getElementById('edit-postCode').value = location.postCode;
             document.getElementById('edit-street').value = location.street;
         }, 250)
-
     }
 
     // remove location in database
     updateLocation () {
-
-        console.log(this.state.currentLocation);
 
         var newData = {
             name: document.getElementById('edit-name').value,
@@ -71,6 +76,13 @@ class LocationsContainerView extends React.Component {
         firebase.database().ref().update(updatedLocation);
 
         // hiding the overlay
+        this.setState({
+            overlay: false
+        });
+    }
+
+    // clicking on the big 'x' on the overlay will close the overlay
+    cancelUpdateLocation () {
         this.setState({
             overlay: false
         });
@@ -104,94 +116,119 @@ class LocationsContainerView extends React.Component {
                     {locations[item].street}
                 </td>
                 <td>
-                    <button type="button" onClick={() => this.toggleUpdateLocationOverlay(item, locations[item])}>
-                        Edit location
+                    <button type="button"
+                            className="button positive"
+                            onClick={() => this.toggleUpdateLocationOverlay(item, locations[item])}>
+                        Edit
                     </button>
                 </td>
                 <td>
                     {Object.keys(locations).length > 5 ?
-                        <button type="button" onClick={() => this.removeLocation(item)}>
-                            Remove location
+                        <button type="button"
+                                className="button negative"
+                                onClick={() => this.removeLocation(item)}>
+                            Remove
                         </button>
                         : null}
-
                 </td>
             </tr>
         }.bind(this));
 
         return (
-            <main>
-                <h1>Firebase v3 React Redux</h1>
-                <section>
-                    <h2>Create a location</h2>
-                    <label htmlFor="name">
-                        Name:
-                    </label>
-                    <input type="text" id="name" />
-                    <label htmlFor="postCode">
-                        Postcode:
-                    </label>
-                    <input type="text" id="postCode" />
-                    <label htmlFor="street">
-                        Street:
-                    </label>
-                    <input type="text" id="street" />
-                    <button type="submit" onClick={() => this.pushLocation()}>
-                        Create location
-                    </button>
-                </section>
-                <section>
-                    <h2>Location list</h2>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>
-                                    Name
-                                </th>
-                                <th>
-                                    Postcode
-                                </th>
-                                <th>
-                                    Street
-                                </th>
-                                <th>
-                                    Edit location
-                                </th>
-                                <th>
-                                    Remove location
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {locationTableContent}
-                        </tbody>
-                    </table>
-                </section>
+            <div>
+                <main className="main">
+                    <h1 className="title">
+                        Firebase v3 React Redux
+                    </h1>
+                    <section className="block">
+                        <h2 className="sub-title">Create a location</h2>
+                        <p>All fields are required</p>
+                        <form>
+                            <label htmlFor="name">
+                                Name:
+                            </label>
+                            <input type="text" id="name" />
+                            <label htmlFor="postCode">
+                                Postcode:
+                            </label>
+                            <input type="text" id="postCode" />
+                            <label htmlFor="street">
+                                Street:
+                            </label>
+                            <input type="text" id="street" />
+                            <button type="button"
+                                    className="button positive"
+                                    onClick={() => this.pushLocation()}>
+                                Create
+                            </button>
+                        </form>
+                    </section>
+                    <section className="block">
+                        <h2 className="sub-title">Location list</h2>
+                        <table className="table">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Name
+                                    </th>
+                                    <th>
+                                        Postcode
+                                    </th>
+                                    <th>
+                                        Street
+                                    </th>
+                                    <th>
+                                        Edit
+                                    </th>
+                                    <th>
+                                        Remove
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {locationTableContent}
+                            </tbody>
+                        </table>
+                    </section>
+                </main>
                 {this.state.overlay === true ?
                     <section className="overlay">
-                        <h2>Edit the location</h2>
-                        <label htmlFor="edit-name">
-                            Name:
-                        </label>
-                        <input type="text" id="edit-name" />
-                        <label htmlFor="edit-postCode">
-                            Postcode:
-                        </label>
-                        <input type="text" id="edit-postCode" />
-                        <label htmlFor="edit-street">
-                            Street:
-                        </label>
-                        <input type="text" id="edit-street" />
-                        <button type="button" onClick={() => this.updateLocation()}>
-                            Edit location
+                        <div className="container">
+                            <h2 className="sub-title">Edit the location</h2>
+                            <p>All fields are required</p>
+                            <form>
+                                <label htmlFor="edit-name">
+                                    Name:
+                                </label>
+                                <input type="text" id="edit-name" />
+                                <label htmlFor="edit-postCode">
+                                    Postcode:
+                                </label>
+                                <input type="text" id="edit-postCode" />
+                                <label htmlFor="edit-street">
+                                    Street:
+                                </label>
+                                <input type="text" id="edit-street" />
+                                <button type="button"
+                                        className="button positive"
+                                        onClick={() => this.updateLocation()}>
+                                    Update
+                                </button>
+                            </form>
+                        </div>
+                        <button type="button"
+                                className="button close"
+                                onClick={() => this.cancelUpdateLocation()}>
+                            x
                         </button>
                     </section>
                 : null }
-            </main>
+            </div>
         )
     }
 }
 
+// using mapStateToProps to get the store into the page
 var mapStateToProps = (state) => {
 
     return {

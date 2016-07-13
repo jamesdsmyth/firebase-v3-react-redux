@@ -1,18 +1,108 @@
 @import "./reset.scss";
 
 #firebase-app {
-    height: 100vh;
-    width: 100vw;
-    overflow: scroll;
-    float: left;
-    position: relative;
+    font-family: arial;
+    font-size: 1em;
+
+    .main {
+        height: 100vh;
+        width: 100%;
+        max-width: 900px;
+        margin: 0 auto;
+        position: relative;
+        overflow: scroll;
+    }
+
+    .title {
+        font-size: 2em;
+        padding: 20px 0;
+    }
+
+    .sub-title {
+        font-size: 1.5em;
+        padding-bottom: 20px;
+    }
+
+    .block {
+        float: left;
+        width: 100%;
+        margin-bottom: 20px;
+        border-top: 1px solid #e8e8e8;
+        padding-top: 40px;
+    }
+
+    label {
+        margin-right: 10px;
+    }
+
+    input {
+        padding: 5px;
+        font-size: 1em;
+        margin-right: 10px;
+    }
+
+    p {
+        margin-bottom: 15px;
+    }
+
+    .button {
+        border: none;
+        font-size: 1em;
+        padding: 5px 10px;
+        min-width: 100px;
+        cursor: pointer;
+
+        &.positive {
+            background: #9ED99E;
+        }
+
+        &.negative {
+            background: #EB6427;
+        }
+
+        &.close {
+            position: absolute;
+            top: 0;
+            right: 12px;
+            background: none;
+            font-size: 2em;
+            padding: 0;
+            color: #858585;
+            min-width: 0;
+        }
+    }
+
+    .table {
+        width: 100%;
+
+        tr {
+            border-bottom: 1px solid #cccccc;
+
+            th {
+                color: #EB214E;
+            }
+
+            th,
+            td {
+                padding:  10px 5px;
+                text-align: left;
+            }
+        }
+    }
 
     .overlay {
-        height: 100vh;
-        width: 100vw;
-        background: rgba(107, 202, 60, 0.8);
+        height: calc(100vh - 40px);
+        width: calc(100vw - 40px);
+        background: rgba(240, 221, 166, 1);
         position: absolute;
-        top: 0;
-        left: 0;
+        top: 20px;
+        left: 20px;
+
+        .container {
+            width: 100%;
+            max-width: 900px;
+            margin: 50px auto 0;
+            position: relative;
+        }
     }
 }
