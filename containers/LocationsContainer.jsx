@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 
 class LocationsContainerView extends React.Component {
 
-
     constructor(props) {
         super(props);
 
@@ -22,20 +21,41 @@ class LocationsContainerView extends React.Component {
             name: document.getElementById('name').value,
             postCode: document.getElementById('postCode').value,
             street: document.getElementById('street').value
+        }, function () {
+            document.getElementById('name').value = null;
+            document.getElementById('postCode').value = null;
+            document.getElementById('street').value = null;
         });
+    }
+
+    editLocation (ref) {
+        var newData = {
+            name: document.getElementById('edit-name').value,
+            postCode: document.getElementById('edit-postCode').value,
+            street: document.getElementById('edit-street').value
+        }
+
+        var updatedLocation = {};
+            updatedLocation['/locations/' + ref] = newData;
+
+        firebase.database().ref().update(updatedLocation);
+    }
+
+    removeLocation (ref) {
+        firebase.database().ref('/locations/' + ref).remove();
     }
 
     render () {
 
         // saving the state locations as a variable to make it easier to reference later on
-        var locations = this.state.locations;
+        var locations = this.state.locations || {}
 
         // to demonstrate that we have got the firebase data we will construct a table.
         // here we are iterating through each object and creating a table row.
         // notice 'Object.keys(locations || {})' - the empty brackets are there as a fall back for when we have
         // no data to iterate through. This will prevent React from throwing an error. Once Firebase has returned the data,
         // the render will occur again with the 'locations' variable populated.
-        var locationTableContent = Object.keys(locations || {}).map(function (item, i) {
+        var locationTableContent = Object.keys(locations).map(function (item, i) {
             return <tr key={i}>
                 <td>
                     {locations[item].name}
@@ -46,8 +66,21 @@ class LocationsContainerView extends React.Component {
                 <td>
                     {locations[item].street}
                 </td>
+                <td>
+                    <button type="button" onClick={() => this.editLocation(item)}>
+                        Edit location
+                    </button>
+                </td>
+                <td>
+                    {Object.keys(locations).length > 4 ?
+                        <button type="button" onClick={() => this.removeLocation(item)}>
+                            Remove location
+                        </button>
+                        : null}
+
+                </td>
             </tr>
-        });
+        }.bind(this));
 
         return (
             <main>
@@ -66,7 +99,9 @@ class LocationsContainerView extends React.Component {
                         Street:
                     </label>
                     <input type="text" id="street" />
-                    <button type="submit" onClick={() => this.pushLocation()}>Create location</button>
+                    <button type="submit" onClick={() => this.pushLocation()}>
+                        Create location
+                    </button>
                 </section>
                 <section>
                     <h2>Location list</h2>
@@ -82,12 +117,36 @@ class LocationsContainerView extends React.Component {
                                 <th>
                                     Street
                                 </th>
+                                <th>
+                                    Edit location
+                                </th>
+                                <th>
+                                    Remove location
+                                </th>
                             </tr>
                         </thead>
                         <tbody>
                             {locationTableContent}
                         </tbody>
                     </table>
+                </section>
+                <section className="overlay">
+                    <h2>Edit the location</h2>
+                    <label htmlFor="edit-name">
+                        Name:
+                    </label>
+                    <input type="text" id="edit-name" />
+                    <label htmlFor="edit-postCode">
+                        Postcode:
+                    </label>
+                    <input type="text" id="edit-postCode" />
+                    <label htmlFor="edit-street">
+                        Street:
+                    </label>
+                    <input type="text" id="edit-street" />
+                    <button type="button" onClick={() => this.editLocation()}>
+                        Edit location
+                    </button>
                 </section>
             </main>
         )
