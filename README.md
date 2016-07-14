@@ -1,4 +1,4 @@
-# Firebase v3 with React & Redux
+# Firebase v3 with React & Redux example and walkthrough
 
 ## Retrieving, updating, adding & removing data
 
@@ -17,9 +17,9 @@ Clone or pull this repo to see a working example that lists locations in a table
 
 This is a walkthrough of how I managed to get Firebase v3 to play nice with React and Redux. This is a simple approach that involves dispatching an action once the data from Firebase has been received. This in turn passes the Firebase data to a reducer, creating a new state which will then update the view automatically due to React's way of dealing with life cycles.
 
-### Setting up Firebase
+### Setting up Firebase in your project
 
-Adding the below code to the base of your `<body>` above any other JavaScript references in your `index.html` will initialise the call to the Firebase database. Just for ease for the demo, I have setup some dummy data in the database.
+Adding the below code to the base of your `<body>` above any other JavaScript references in your `index.html` will initialise the call to the Firebase database.
 
 ```html
 <script src="https://www.gstatic.com/firebasejs/3.1.0/firebase.js"></script>
@@ -27,8 +27,8 @@ Adding the below code to the base of your `<body>` above any other JavaScript re
     // Initialize Firebase
     var config = {
         apiKey: "your_key",
-        authDomain: "fir-react-redux-example.firebaseapp.com",
-        databaseURL: "https://fir-react-redux-example.firebaseio.com",
+        authDomain: "your_auth_domain",
+        databaseURL: "firebase_url.com",
         storageBucket: "",
     };
     firebase.initializeApp(config);
