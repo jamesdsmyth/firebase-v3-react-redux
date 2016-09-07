@@ -1,5 +1,25 @@
 # Firebase v3 with React & Redux example and walkthrough
 
+This is a walkthrough of how to get Firebase v3 to play nice with React and Redux. This is a simple approach that involves dispatching an action once the data from Firebase has been received. This in turn passes the Firebase data to a reducer, creating a new state which will then update the view automatically due to React's way of dealing with life cycles.
+
+### Firstly, a quick background on React, Redux & Firebase and how they can be connected
+
+#### React
+
+React is a JavaScript library for creating user interfaces. It is useful for building large applications with data that changes over time.
+
+#### Redux
+
+Within a React application you will have your initial central state, Redux allows you to easily update the central state. It gives you the ability to connect the state with components that rely on the state so when the state is updated, the said component will re-render with the updated state.
+
+#### Firebase
+
+Firebase is a cloud-hosted NoSQL database. It's data is stored as JSON, synced across connected devices in milliseconds and gives you the ability to retrieve and update data.
+
+
+---
+
+
 ## Retrieving, updating, adding & removing data
 
 ![Firebase v3 with React & Redux 1](images/redux-1.jpg)
@@ -15,21 +35,20 @@ Clone or pull this repo to see a working example that lists locations in a table
 3. `npm start` to initialize the app
 4. visit [http://localhost:8080/](http://localhost:8080/)
 
-This is a walkthrough of how I managed to get Firebase v3 to play nice with React and Redux. This is a simple approach that involves dispatching an action once the data from Firebase has been received. This in turn passes the Firebase data to a reducer, creating a new state which will then update the view automatically due to React's way of dealing with life cycles.
-
 ### Setting up Firebase in your project
 
 Adding the below code to the base of your `<body>` above any other JavaScript references in your `index.html` will initialise the call to the Firebase database.
+You will need to add your own `apiKey`, `authDomain`, `databaseURL` and `storageBucket`.
 
 ```html
 <script src="https://www.gstatic.com/firebasejs/3.1.0/firebase.js"></script>
     <script>
-    // Initialize Firebase
+    // Initialise Firebase
     var config = {
-        apiKey: "your_key",
-        authDomain: "your_auth_domain",
-        databaseURL: "firebase_url.com",
-        storageBucket: "",
+        apiKey: '<your-api-key>',
+        authDomain: '<your-auth-domain>',
+        databaseURL: '<your-database-url>',
+        storageBucket: '<your-storage-bucket>'
     };
     firebase.initializeApp(config);
 </script>
