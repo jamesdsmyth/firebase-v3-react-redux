@@ -1,8 +1,8 @@
 # Firebase v3 with React & Redux example and walkthrough
 
-This is a walkthrough of how to get Firebase v3 to play nice with React and Redux. This is a simple approach that involves dispatching an action once the data from Firebase has been received. This in turn passes the Firebase data to a reducer, creating a new state which will then update the view automatically due to React's way of dealing with life cycles.
+This is a walkthrough of how to get Firebase v3 working with React and Redux. This is a simple approach that involves dispatching an action once the data from Firebase has been received. This in turn passes the Firebase data to a reducer, creating a new state which will then update the view automatically due to React's way of dealing with life cycles.
 
-### Firstly, a quick background on React, Redux & Firebase and how they can be connected
+### Firstly, a quick background on React, Redux & Firebase
 
 #### React
 
@@ -76,7 +76,7 @@ firebase.database().ref('/').once('value').then((snapshot) => {
 });
 
 // populateLocations action that returns an object of the data and type so when it it passed into the reducer, we know what should be updated
-function populateLocations (data) {
+function LocationsReducer (data) {
     return {
         type: 'ALL_LOCATIONS',
         data: data
