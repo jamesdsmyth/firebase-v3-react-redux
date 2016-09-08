@@ -63,16 +63,24 @@ After setting up the `Redux store` you need to dispatch an action that passes th
 
 ```javascript
 // combines all reducers, one in this case...
-var Reducer = combineReducers({
+const Reducer = combineReducers({
     locations: LocationsReducer
 });
 
 // creates the Redux store with the combined reducer variable
-var Store = createStore(Reducer);
+const Store = createStore(Reducer);
+
+// action that creates an object containing the new data and the type of action
+const populateLocations = (data) => {
+    return {
+        type: 'ALL_LOCATIONS',
+        data: data
+    }
+}
 
 // We get the stored Firebase JSON once and on completion we fire off a dispatch
 firebase.database().ref('/').once('value').then((snapshot) => {
-    Store.dispatch(actions.populateLocations(snapshot.val()));
+    Store.dispatch(populateLocations(snapshot.val()));
 });
 
 // populateLocations action that returns an object of the data and type so when it it passed into the reducer, we know what should be updated
