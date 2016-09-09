@@ -44,7 +44,7 @@ You will need to add your own `apiKey`, `authDomain`, `databaseURL` and `storage
 <script src="https://www.gstatic.com/firebasejs/3.1.0/firebase.js"></script>
     <script>
     // Initialise Firebase
-    var config = {
+    let config = {
         apiKey: '<your-api-key>',
         authDomain: '<your-auth-domain>',
         databaseURL: '<your-database-url>',
@@ -100,7 +100,7 @@ After dispatching the action `populateLocations`, the Firebase data is returned,
 // LocationsReducer is automatically called by Redux when a dispatch occurs
 var LocationsReducer = (state = {}, action) => {
 
-    var newState = Object.assign({}, state);
+    let newState = Object.assign({}, state);
 
     switch (action.type) {
         case 'ALL_LOCATIONS':
@@ -131,7 +131,7 @@ Clicking the 'Create location' submit button, the `pushLocation()` is called. A 
 pushLocation () {
 
     // creating the object that will be pushed to the object in the database
-    var newLocation = {
+    let newLocation = {
         name: document.getElementById('name').value,
         postCode: document.getElementById('postCode').value,
         street: document.getElementById('street').value
@@ -153,13 +153,13 @@ Clicking the 'Update location' button, the `updateLocation()` is called.
 
 ```javascript
 updateLocation (ref) {
-    var newData = {
+    let newData = {
         name: document.getElementById('edit-name').value,
         postCode: document.getElementById('edit-postCode').value,
         street: document.getElementById('edit-street').value
     }
 
-    var updatedLocation = {};
+    let updatedLocation = {};
         updatedLocation['/locations/' + ref] = newData;
 
     firebase.database().ref().update(updatedLocation);
@@ -186,6 +186,10 @@ removeLocation (ref) {
 
 ---
 
+## PDF
+
+A PDF describing React, Redux & Firebase in some more detail alongside methods to retrieve, add, update and remove data can be downloaded from [here](https://firebasestorage.googleapis.com/v0/b/fir-react-redux-example.appspot.com/o/react%20redux%20firebase.pdf?alt=media&token=4eff9a0d-d13d-4760-ac29-133daa6568da)
+
 ### Help improve this
 
-Although this is working for me, if you see anything that can be improved or a different method entirely, just pull and let me know what can be improved. This way I can do it properly the next time :)
+Although this is working for me, if you see anything that can be improved or a different method entirely, just pull and let me know what can be improved.
