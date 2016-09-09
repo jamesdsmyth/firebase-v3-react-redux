@@ -83,7 +83,7 @@ firebase.database().ref('/').once('value').then((snapshot) => {
     Store.dispatch(populateLocations(snapshot.val()));
 });
 
-// populateLocations action that returns an object of the data and type so when it it passed into the reducer, we know what should be updated
+// populateLocations action that returns an object of the data and type so when it is passed into the reducer, we know what should be updated
 function LocationsReducer (data) {
     return {
         type: 'ALL_LOCATIONS',
@@ -107,7 +107,6 @@ var LocationsReducer = (state = {}, action) => {
 
             newState = action.data.locations
             return newState;
-            break;
 
         default:
             return state;
